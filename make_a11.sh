@@ -23,4 +23,9 @@ cp arch/arm/boot/zImage $OUT_DIR/kernel/
 echo " Copying modules (*.ko) to $OUT_DIR/modules/..."
 find . -path "$OUT_DIR" -prune -o -name  \*.ko -exec cp '{}' "$OUT_DIR"/modules/ ';'
 
+echo " Striping modules (reduce size)"
+for x in "$OUT_DIR"/modules/* ; do
+    "$TOOLCHAIN"strip --strip-debug $x
+done
+
 echo " All done!..."
